@@ -1,9 +1,9 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
-import MyNote from './components/MyNote'
+import NoteApp from './components/NoteApp';
 
 // import style
-// import './styles/style.css';
+import './styles/style.css';
 
 const root = createRoot(document.getElementById('root'));
-root.render(<MyNote />);
+root.render(<NoteApp />);
