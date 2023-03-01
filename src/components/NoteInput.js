@@ -3,8 +3,6 @@ import React from "react";
 class NoteInput extends React.Component{
     constructor(props) {
         super(props);
-        // TODO id masih blum
-        // createdAt: new Date,
         this.state = {
             title: '',
             body: '',
