@@ -2,6 +2,7 @@ import React from "react";
 import { getInitialData } from "../utils";
 import NoteInput from "./NoteInput";
 import NoteList from "./NoteList";
+import ArsipList from "./ArsipList";
 
 class NoteApp extends React.Component{
     constructor(props) {
@@ -12,20 +13,20 @@ class NoteApp extends React.Component{
         }
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
         this.onDeleteHandler = this.onDeleteHandler.bind(this);
-        this.onArsipHandler = this.onArsipHandler.bind(this);
+        this.onToArsipHandler = this.onToArsipHandler.bind(this);
     }
 
-    onArsipHandler(id){
-        let snotes = this.state.notes;
-        console.log(id);
+    onToArsipHandler(id){
         this.setState((prevState) => {
+            let snotes = this.state.notes.filter((snote) => snote.id === id);
+            console.log(snotes);
             return {   
                 arsip: [
                     ...prevState.arsip,
                     { 
                         id: id,
-                        title: snotes.title,
-                        body: snotes.body,
+                        title: snotes[0].title,
+                        body: snotes[0].body,
                         createdAt: new Date(),
                         archived: true
                     }
@@ -62,8 +63,15 @@ class NoteApp extends React.Component{
         if(this.state.notes.length === 0)
             noteList = <p className="notes-list__empty-message "> Tidak ada catatan </p>
         else
-            noteList = <NoteList notes = {this.state.notes} onArsipl = {this.onArsipHandler} onDeletel = {this.onDeleteHandler}/>
+            noteList = <NoteList notes = {this.state.notes} onArsipl = {this.onToArsipHandler} onDeletel = {this.onDeleteHandler}/>
         
+        let arsipList;
+
+        if(this.state.arsip.length === 0)
+            arsipList = <p className="notes-list__empty-message "> Tidak ada catatan </p>
+        else
+            arsipList = <ArsipList archives={this.state.arsip} onArsipl = {this.onToArsipHandler} onDeletel = {this.onDeleteHandler}/>
+
         return(
             <React.Fragment>
                 <div className="note-app__header">
@@ -75,6 +83,7 @@ class NoteApp extends React.Component{
                     <h2>Catatan Aktif</h2>
                     {noteList}
                     <h2>Arsip</h2>
+                    {arsipList}
                 </div>
             </React.Fragment>
         );
