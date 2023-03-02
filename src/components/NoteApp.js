@@ -8,9 +8,31 @@ class NoteApp extends React.Component{
         super(props);
         this.state = {
             notes : getInitialData(),
+            arsip : []
         }
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
         this.onDeleteHandler = this.onDeleteHandler.bind(this);
+        this.onArsipHandler = this.onArsipHandler.bind(this);
+    }
+
+    onArsipHandler(id){
+        let snotes = this.state.notes;
+        console.log(id);
+        this.setState((prevState) => {
+            return {   
+                arsip: [
+                    ...prevState.arsip,
+                    { 
+                        id: id,
+                        title: snotes.title,
+                        body: snotes.body,
+                        createdAt: new Date(),
+                        archived: true
+                    }
+                ],
+            }
+        })
+        this.onDeleteHandler(id)
     }
 
     onAddNoteHandler({title, body}){
@@ -31,9 +53,7 @@ class NoteApp extends React.Component{
     }
 
     onDeleteHandler(id){
-        console.log(id);
         const notes = this.state.notes.filter((note) => note.id !== id);
-        console.log(notes);
         this.setState({notes});
     }
 
@@ -42,7 +62,7 @@ class NoteApp extends React.Component{
         if(this.state.notes.length === 0)
             noteList = <p className="notes-list__empty-message "> Tidak ada catatan </p>
         else
-            noteList = <NoteList notes = {this.state.notes} onDeletel = {this.onDeleteHandler}/>
+            noteList = <NoteList notes = {this.state.notes} onArsipl = {this.onArsipHandler} onDeletel = {this.onDeleteHandler}/>
         
         return(
             <React.Fragment>
@@ -54,6 +74,7 @@ class NoteApp extends React.Component{
                     <NoteInput addNote = {this.onAddNoteHandler}/>
                     <h2>Catatan Aktif</h2>
                     {noteList}
+                    <h2>Arsip</h2>
                 </div>
             </React.Fragment>
         );
