@@ -1,10 +1,11 @@
 import React from 'react';
 import { showFormattedDate } from '../utils';
+import DeleteButton from './DeleteButton';
 
-function NoteList({notes}){
+
+function NoteList({notes, onDeletel}){
     return(
         <div>
-            <h2>Catatan Aktif</h2>
             <div className='notes-list'>
                 {notes.map((note) => (
                     <div className="note-item" key={note.id}>
@@ -12,6 +13,9 @@ function NoteList({notes}){
                             <div className="note-item__title">{note.title}</div>
                             <div className="note-item__date">{showFormattedDate(note.createdAt)}</div>
                             <div className='note-item__body'>{note.body}</div>
+                            <div className='note-item__action'>
+                               <DeleteButton id={note.id} onDelete = {onDeletel}/>
+                            </div>
                         </div>
                     </div>
                 ))}

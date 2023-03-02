@@ -10,6 +10,7 @@ class NoteApp extends React.Component{
             notes : getInitialData(),
         }
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
+        this.onDeleteHandler = this.onDeleteHandler.bind(this);
     }
 
     onAddNoteHandler({title, body}){
@@ -29,7 +30,20 @@ class NoteApp extends React.Component{
         });
     }
 
+    onDeleteHandler(id){
+        console.log(id);
+        const notes = this.state.notes.filter((note) => note.id !== id);
+        console.log(notes);
+        this.setState({notes});
+    }
+
     render(){
+        let noteList;
+        if(this.state.notes.length === 0)
+            noteList = <p className="notes-list__empty-message "> Tidak ada catatan </p>
+        else
+            noteList = <NoteList notes = {this.state.notes} onDeletel = {this.onDeleteHandler}/>
+        
         return(
             <React.Fragment>
                 <div className="note-app__header">
@@ -38,7 +52,8 @@ class NoteApp extends React.Component{
                 <div className="note-app__body">
                     <h2>Buat Catatan</h2>
                     <NoteInput addNote = {this.onAddNoteHandler}/>
-                    <NoteList notes = {this.state.notes}/>
+                    <h2>Catatan Aktif</h2>
+                    {noteList}
                 </div>
             </React.Fragment>
         );
