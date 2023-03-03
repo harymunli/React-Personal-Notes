@@ -14,12 +14,12 @@ class NoteApp extends React.Component{
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
         this.onDeleteHandler = this.onDeleteHandler.bind(this);
         this.onToArsipHandler = this.onToArsipHandler.bind(this);
+        this.onBackToNote = this.onBackToNote.bind(this)
     }
 
     onToArsipHandler(id){
         this.setState((prevState) => {
             let snotes = this.state.notes.filter((snote) => snote.id === id);
-            console.log(snotes);
             return {   
                 arsip: [
                     ...prevState.arsip,
@@ -27,13 +27,32 @@ class NoteApp extends React.Component{
                         id: id,
                         title: snotes[0].title,
                         body: snotes[0].body,
-                        createdAt: new Date(),
+                        createdAt: snotes[0].createdAt,
                         archived: true
                     }
                 ],
             }
         })
         this.onDeleteHandler(id)
+    }
+
+    onBackToNote(id){
+        this.setState((prevState) => {
+            let arsips = this.state.notes.filter((arsip) => arsip.id === id);
+            return {
+                notes: [
+                    ...prevState,
+                    {
+                        id: id,
+                        title: arsips[0].title,
+                        body: arsips[0].body,
+                        createdAt: arsips[0].createdAt,
+                        archived: false
+                    }
+                ]
+            }
+        })
+        this.onDeleteArsip(id);
     }
 
     onAddNoteHandler({title, body}){
@@ -56,6 +75,11 @@ class NoteApp extends React.Component{
     onDeleteHandler(id){
         const notes = this.state.notes.filter((note) => note.id !== id);
         this.setState({notes});
+    }
+     
+    onDeleteArsip(id){
+        const arsips = this.state.arsip.filter((arsip) => arsip.id !== id);
+        this.setState({arsips});
     }
 
     render(){
