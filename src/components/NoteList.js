@@ -1,7 +1,7 @@
 import React from 'react';
 import { showFormattedDate } from '../utils';
-import ArsipButton from './ArsipButton';
-import DeleteButton from './DeleteButton';
+import ArsipButton from './button/ArsipButton';
+import DeleteButton from './button/DeleteButton';
 
 
 function NoteList({notes, onDeletel, onArsipl}){

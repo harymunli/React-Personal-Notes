@@ -38,15 +38,16 @@ class NoteApp extends React.Component{
 
     onBackToNote(id){
         this.setState((prevState) => {
-            let arsips = this.state.notes.filter((arsip) => arsip.id === id);
+            let arsip = this.state.arsip.filter((val) => val.id === id) ;
+            console.log(arsip);
             return {
                 notes: [
-                    ...prevState,
+                    ...prevState.notes,
                     {
                         id: id,
-                        title: arsips[0].title,
-                        body: arsips[0].body,
-                        createdAt: arsips[0].createdAt,
+                        title: arsip[0].title,
+                        body: arsip[0].body,
+                        createdAt: arsip[0].createdAt,
                         archived: false
                     }
                 ]
@@ -78,8 +79,8 @@ class NoteApp extends React.Component{
     }
      
     onDeleteArsip(id){
-        const arsips = this.state.arsip.filter((arsip) => arsip.id !== id);
-        this.setState({arsips});
+        const arsip = this.state.arsip.filter((arsip) => arsip.id !== id);
+        this.setState({arsip});
     }
 
     render(){
@@ -90,11 +91,10 @@ class NoteApp extends React.Component{
             noteList = <NoteList notes = {this.state.notes} onArsipl = {this.onToArsipHandler} onDeletel = {this.onDeleteHandler}/>
         
         let arsipList;
-
         if(this.state.arsip.length === 0)
             arsipList = <p className="notes-list__empty-message "> Tidak ada catatan </p>
         else
-            arsipList = <ArsipList archives={this.state.arsip} onArsipl = {this.onToArsipHandler} onDeletel = {this.onDeleteHandler}/>
+            arsipList = <ArsipList archives={this.state.arsip} onPindahl = {this.onBackToNote} onDeletel = {this.onDeleteHandler}/>
 
         return(
             <React.Fragment>
