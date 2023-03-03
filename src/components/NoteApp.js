@@ -39,7 +39,6 @@ class NoteApp extends React.Component{
     onBackToNote(id){
         this.setState((prevState) => {
             let arsip = this.state.arsip.filter((val) => val.id === id) ;
-            console.log(arsip);
             return {
                 notes: [
                     ...prevState.notes,
