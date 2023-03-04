@@ -9,12 +9,44 @@ class NoteApp extends React.Component{
         super(props);
         this.state = {
             notes : getInitialData(),
-            arsip : []
+            arsip : [],
+            filtered : [],
+            already_filter : false
         }
         this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
         this.onDeleteHandler = this.onDeleteHandler.bind(this);
         this.onToArsipHandler = this.onToArsipHandler.bind(this);
-        this.onBackToNote = this.onBackToNote.bind(this)
+        this.onBackToNote = this.onBackToNote.bind(this);
+        this.onSearchHandler = this.onSearchHandler.bind(this);
+    }
+
+    onSearchHandler(event){
+        this.setState((prevState) => {
+            let prevLen = parseInt(prevState.filtered.length);
+            if (prevLen === 1) {
+                return {
+                    already_filter : true,
+                }
+            }else{
+                let _filtered = this.state.notes.filter((val) =>{
+                    console.log(val.title.includes(event.target.value));
+                    return val.title.includes(event.target.value)
+                });
+                //
+                console.log(_filtered);
+                return {
+                    filtered: _filtered
+                }
+            }
+        })
+
+
+        let note_filtered = this.state.notes.filter((val)=>{
+            return val.title.includes(event.target.value);
+        });
+        this.setState({
+            filtered: note_filtered
+        });
     }
 
     onToArsipHandler(id){
@@ -83,10 +115,17 @@ class NoteApp extends React.Component{
     }
 
     render(){
+
+        let note_len = parseInt(this.state.notes.length);
+        let filter_len = parseInt(this.state.filtered.length);
         let noteList;
-        if(this.state.notes.length === 0)
+        
+        if(note_len === 0 && filter_len === 0)
             noteList = <p className="notes-list__empty-message "> Tidak ada catatan </p>
-        else
+        else if(filter_len > 0 ){
+            console.log("masuk kok");
+            noteList = <NoteList notes = {this.state.filtered} onArsipl = {this.onToArsipHandler} onDeletel = {this.onDeleteHandler}/>
+        }else
             noteList = <NoteList notes = {this.state.notes} onArsipl = {this.onToArsipHandler} onDeletel = {this.onDeleteHandler}/>
         
         let arsipList;
@@ -97,8 +136,9 @@ class NoteApp extends React.Component{
 
         return(
             <React.Fragment>
-                <div className="note-app__header">
+                <div className="note-app__header note-search">
                     <h1>Notes</h1>
+                    <input type="text" placeholder="Cari catatan..." onChange={this.onSearchHandler}/>
                 </div>
                 <div className="note-app__body">
                     <h2>Buat Catatan</h2>
