@@ -1,5 +1,5 @@
 # personal-notes
-Severless React personal notes application 
+Severless React personal notes application for dicoding submission
 
 ## How to run application
 1. `npm i`
