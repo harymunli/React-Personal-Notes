@@ -1,5 +1,10 @@
-# personal-notes
-Severless React personal notes application for dicoding submission
+# Personal-notes
+Severless ReactJS personal notes application for Dicoding Indonesia submission
+
+## Version
+- node v18.14.0
+- npm v9.3.1
+
 
 ## How to run application
 1. `npm i`
