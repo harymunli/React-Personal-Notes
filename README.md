@@ -1,5 +1,5 @@
 # Personal-notes
-Severless ReactJS personal notes application for Dicoding Indonesia submission
+Severless ReactJS personal notes application
 
 ## Version
 - node v18.14.0
